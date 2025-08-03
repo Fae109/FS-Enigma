@@ -19,19 +19,19 @@ two_letter_map = {
 # Reverse mapping for encoding
 encode_map = {v: k for k, v in two_letter_map.items()}
 
-
 def encode_message(text: str) -> str:
     """Encode plaintext to custom code, inserting a random letter for spaces."""
     encoded = ''
     for ch in text:
-        if ch.upper() in encode_map:
+        if ch in encode_map:
+            encoded += encode_map[ch]
+        elif ch.upper() in encode_map:  # Added this elif to handle uppercase
             encoded += encode_map[ch.upper()]
         elif ch == ' ':
             encoded += random.choice('ABCDEFGHIJKLMNOPQRSTU')
         else:
             encoded += ch
     return encoded
-
 
 def decode_message(code: str) -> str:
     """Decode custom code to plaintext, removing random single-letter separators."""
@@ -52,7 +52,6 @@ def decode_message(code: str) -> str:
             decoded += ' '
     return decoded
 
-
 def main():
     mode = input("Choose mode: (E)ncode or (D)ecode? ").strip().upper()
     if mode == 'E':
@@ -66,3 +65,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
